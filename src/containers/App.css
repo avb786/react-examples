@@ -1,0 +1,21 @@
+
+.btns {
+    background-color: orange;
+    padding : 8px;
+    border: solid 1px white;
+    font: monospace;
+    color: white;
+    cursor: pointer;
+}
+.btns:hover{
+background-color: tomato;
+}
+.red {
+    color: tomato;
+}
+.bold {
+    font-weight: bold;
+}
+.gold {
+    color: gold;
+}
