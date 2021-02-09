@@ -4,13 +4,16 @@ import Persons from '../components/Persons/Persons';
 import Validation from "../components/Validation/Validation";
 import Char from "../components/Char/Char";
 import Cockpit from "../components/Cockpits/Cockpits";
+import WithClass from "../hoc/WithClass"
+import AuthContext from "../context/auth-context";
+
 
 class App extends Component {
 
   constructor(props) {
     super(props)
     console.log('[App.js] constructor');
-    this. state = {
+    this.state = {
       persons: [
         { id: 1, name: "Aayush Patel", age: 22 },
         { id: 2, name: "Ujwal Seth", age: 12 },
@@ -19,7 +22,8 @@ class App extends Component {
       nameLen: 0,
       name: "",
       showContent: false,
-      showCockpit: true
+      showCockpit: true,
+      setAuthenticated: false
     };  
   }
 
@@ -88,6 +92,12 @@ class App extends Component {
     });
   }
 
+loginHandler() {
+this.setState({
+  setAuthenticated: true
+})
+  }
+
   valueClicked(event) {
     let str = "";
     let shallowCopy = [...this.state.name];
@@ -134,9 +144,13 @@ class App extends Component {
       );
     }
     return (
-      <div className="App">
+<WithClass>
+     
         <button onClick={() => this.setState({ showCockpit: false })}>Show Cockpit</button>
+        <button onClick={() => this.setState({ setAuthenticated: true })}>Login</button>
+        <AuthContext.Provider value={{authenticated: this.state.setAuthenticated , login: this.loginHandler}}>
         {this.state.showCockpit? <Cockpit togglePersonContents={this.togglePersonContents} switchNameHandler={this.switchNameHandler} /> : null}
+        </AuthContext.Provider>
         {person}
         <br />
         <label for="nameLen">
@@ -155,7 +169,7 @@ class App extends Component {
           clickedVal={(event) => this.valueClicked(event)}
           nameChar={this.state.name}
         />
-      </div>
+        </WithClass>
     );
   }
 }

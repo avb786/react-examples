@@ -1,17 +1,21 @@
-import React, {useEffect} from  'react'
+import React, {useEffect, useRef} from  'react'
 const Cockpit = (props) => {
+const toggleBtnRef = useRef(null);
+
 
   useEffect(()=> {
     console.log("[Cockpit.js] useEffect");
-  setTimeout(() => {
-      alert('save to cloud')
-    }, 1000);
+  // setTimeout(() => {
+  //     alert('save to cloud')
+  //   }, 1000);
+  toggleBtnRef.current.click()
     return () => {
       console.log("[Cockpit.js], useEffect removed");
     }
   }, []);
 
   useEffect(() => {
+    toggleBtnRef.current.click()
     console.log("[Cockpit.js] 2 useEffect");
     return () => {
       console.log("[Cockpit.js],2  useEffect removed");
@@ -35,7 +39,9 @@ const Cockpit = (props) => {
         <div>
             <h1 className="gold">Aayush Lets Learn</h1>
         <p className={colors}>Working totally find</p>
-        <button  onClick={props.togglePersonContents}>
+        <button 
+          ref={toggleBtnRef}
+        onClick={props.togglePersonContents}>
           Show The Content
         </button>
         <button
